@@ -1,0 +1,16 @@
+project_id = "pocshjesdncxkamawrjv"
+
+[functions.admin-auth]
+verify_jwt = false
+
+[functions.generate-sitemap]
+verify_jwt = false
+
+[functions.ai-chatbot]
+verify_jwt = false
+
+[functions.cloudinary-upload]
+verify_jwt = false
+
+[functions.ai-blog-writer]
+verify_jwt = false

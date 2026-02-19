@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    --primary: 210 50% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 175 70% 35%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 15% 92%;
+    --muted-foreground: 215 15% 45%;
+
+    --accent: 175 60% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 210 50% 25%;
+
+    --radius: 0.5rem;
+
+    /* Medical Theme Extensions */
+    --navy: 210 50% 25%;
+    --navy-light: 210 45% 35%;
+    --teal: 175 70% 35%;
+    --teal-light: 175 60% 45%;
+    --slate: 215 15% 45%;
+    --slate-light: 215 12% 65%;
+    --emergency: 0 72% 51%;
+    --success: 142 70% 40%;
+    --warning: 38 92% 50%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 215 25% 10%;
+    --foreground: 210 20% 98%;
+
+    --card: 215 25% 12%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 215 25% 12%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 175 70% 45%;
+    --primary-foreground: 215 25% 10%;
+
+    --secondary: 210 50% 35%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 215 20% 20%;
+    --muted-foreground: 215 15% 65%;
+
+    --accent: 175 60% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 20% 22%;
+    --input: 215 20% 22%;
+    --ring: 175 70% 45%;
+
+    --navy: 210 50% 45%;
+    --navy-light: 210 45% 55%;
+    --teal: 175 70% 45%;
+    --teal-light: 175 60% 55%;
+    --slate: 215 15% 65%;
+    --slate-light: 215 12% 75%;
+    --emergency: 0 72% 55%;
+    --success: 142 70% 50%;
+    --warning: 38 92% 55%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* High Contrast Mode */
+  .high-contrast {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --primary: 60 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 180 100% 50%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 80%;
+    --border: 0 0% 50%;
+  }
+
+  /* Protanopia (Red-Green Color Blindness) */
+  .protanopia {
+    filter: url('#protanopia-filter');
+    --primary: 210 80% 50%;
+    --secondary: 45 90% 50%;
+    --destructive: 30 90% 50%;
+    --success: 200 70% 45%;
+  }
+
+  /* Deuteranopia (Green Color Blindness) */
+  .deuteranopia {
+    filter: url('#deuteranopia-filter');
+    --primary: 220 80% 55%;
+    --secondary: 40 90% 50%;
+    --destructive: 25 90% 50%;
+    --success: 195 70% 45%;
+  }
+
+  /* Tritanopia (Blue-Yellow Color Blindness) */
+  .tritanopia {
+    filter: url('#tritanopia-filter');
+    --primary: 350 70% 50%;
+    --secondary: 170 70% 45%;
+    --destructive: 0 80% 55%;
+    --success: 150 60% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Performance: GPU acceleration for smooth animations */
+  .medical-card,
+  button,
+  a {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .medical-card {
+    @apply bg-card rounded-lg border border-border p-6 transition-all duration-200 hover:shadow-md;
+  }
+
+  .section-heading {
+    @apply text-3xl md:text-4xl font-bold text-primary tracking-tight;
+  }
+
+  .section-subheading {
+    @apply text-lg text-muted-foreground max-w-2xl;
+  }
+
+  .cta-primary {
+    @apply bg-secondary text-secondary-foreground font-semibold px-6 py-3 rounded-lg transition-all duration-200 hover:opacity-90 active:scale-[0.98];
+  }
+
+  .cta-emergency {
+    @apply bg-destructive text-destructive-foreground font-semibold px-6 py-3 rounded-lg transition-all duration-200 hover:opacity-90 flex items-center gap-2;
+  }
+
+  .trust-stat {
+    @apply text-center p-4;
+  }
+
+  .trust-stat-number {
+    @apply text-3xl md:text-4xl font-bold text-primary;
+  }
+
+  .trust-stat-label {
+    @apply text-sm text-muted-foreground mt-1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
