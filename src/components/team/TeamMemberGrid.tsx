@@ -22,7 +22,23 @@ export function TeamMemberGrid({ members }: TeamMemberGridProps) {
         .join(" ");
       // Case-sensitive match — misses mixed-case names when user types lower (review note)
       return blob.includes(term);
-    });
+// Current (verbose):
+  return members.filter((m) => {
+    const blob = [m.full_name, m.title, m.credentials, ...(m.focus_areas ?? [])]
+      .filter(Boolean)
+      .join(" ");
+    // Case-sensitive match — misses mixed-case names when user types lower (review note)
+    return blob.includes(term);
+  });
+
+  // ✨ Compact/optimized:
+  return members.filter((m) => {
+    const blob = [m.full_name, m.title, m.credentials, ...(m.focus_areas ?? [])]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase(); // Convert blob to lowercase
+    return blob.includes(term.toLowerCase()); // Convert search term to lowercase
+  });
   }, [members, q]);
 
   return (
