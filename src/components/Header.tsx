@@ -136,6 +136,12 @@ export function Header() {
                 {link.name}
               </button>
             ))}
+            <Link
+              to="/team"
+              className="text-sm font-medium transition-colors hover:text-secondary text-foreground"
+            >
+              Team
+            </Link>
           </div>
 
           {/* CTA Buttons */}

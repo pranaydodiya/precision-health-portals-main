@@ -322,6 +322,54 @@ export type Database = {
         }
         Relationships: []
       }
+      team_members: {
+        Row: {
+          id: string
+          slug: string
+          full_name: string
+          title: string | null
+          credentials: string | null
+          bio: string | null
+          focus_areas: string[] | null
+          photo_url: string | null
+          display_order: number | null
+          is_published: boolean | null
+          internal_notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          full_name: string
+          title?: string | null
+          credentials?: string | null
+          bio?: string | null
+          focus_areas?: string[] | null
+          photo_url?: string | null
+          display_order?: number | null
+          is_published?: boolean | null
+          internal_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          full_name?: string
+          title?: string | null
+          credentials?: string | null
+          bio?: string | null
+          focus_areas?: string[] | null
+          photo_url?: string | null
+          display_order?: number | null
+          is_published?: boolean | null
+          internal_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
