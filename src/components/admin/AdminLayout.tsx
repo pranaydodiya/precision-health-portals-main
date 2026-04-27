@@ -13,6 +13,7 @@ import {
   Briefcase,
   Menu,
   X,
+  Users,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -28,6 +29,7 @@ const navItems = [
   { icon: Briefcase, label: "Services", href: "/admin/services" },
   { icon: MapPin, label: "Locations", href: "/admin/locations" },
   { icon: Video, label: "Testimonials", href: "/admin/testimonials" },
+  { icon: Users, label: "Team", href: "/admin/team" },
   { icon: BarChart3, label: "Analytics", href: "/admin/analytics" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];

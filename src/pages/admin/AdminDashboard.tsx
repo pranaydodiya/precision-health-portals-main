@@ -24,6 +24,17 @@ interface DashboardStats {
   publishedPosts: number;
   totalViews: number;
   totalLocations: number;
+  teamMembers: number;
+  teamMembersPublished: number;
+}
+
+interface RecentPostRow {
+  id: string;
+  title: string;
+  slug: string;
+  is_published: boolean | null;
+  created_at: string;
+  views_count: number | null;
 }
 
 export default function AdminDashboard() {
@@ -34,8 +45,10 @@ export default function AdminDashboard() {
     publishedPosts: 0,
     totalViews: 0,
     totalLocations: 0,
+    teamMembers: 0,
+    teamMembersPublished: 0,
   });
-  const [recentPosts, setRecentPosts] = useState<any[]>([]);
+  const [recentPosts, setRecentPosts] = useState<RecentPostRow[]>([]);
 
   useEffect(() => {
     if (!isLoading && !admin) {
@@ -51,20 +64,24 @@ export default function AdminDashboard() {
   }, [admin]);
 
   const fetchStats = async () => {
-    const [postsResult, locationsResult, analyticsResult] = await Promise.all([
+    const [postsResult, locationsResult, analyticsResult, teamResult] = await Promise.all([
       supabase.from("blog_posts").select("id, is_published, views_count"),
       supabase.from("clinic_locations").select("id"),
       supabase.from("page_analytics").select("id"),
+      supabase.from("team_members").select("id, is_published"),
     ]);
 
     const posts = postsResult.data || [];
     const totalViews = posts.reduce((acc, post) => acc + (post.views_count || 0), 0);
+    const team = teamResult.data || [];
 
     setStats({
       totalPosts: posts.length,
       publishedPosts: posts.filter(p => p.is_published).length,
       totalViews: totalViews + (analyticsResult.data?.length || 0),
       totalLocations: locationsResult.data?.length || 0,
+      teamMembers: team.length,
+      teamMembersPublished: team.filter((m) => m.is_published).length,
     });
   };
 
@@ -100,6 +117,7 @@ export default function AdminDashboard() {
     { icon: FileText, label: "Blog Posts", href: "/admin/posts" },
     { icon: MapPin, label: "Locations", href: "/admin/locations" },
     { icon: Video, label: "Testimonials", href: "/admin/testimonials" },
+    { icon: Users, label: "Team", href: "/admin/team" },
     { icon: BarChart3, label: "Analytics", href: "/admin/analytics" },
     { icon: Settings, label: "Settings", href: "/admin/settings" },
   ];
@@ -109,6 +127,12 @@ export default function AdminDashboard() {
     { label: "Published Posts", value: stats.publishedPosts, icon: Eye, color: "bg-success/10 text-success" },
     { label: "Total Page Views", value: stats.totalViews, icon: TrendingUp, color: "bg-secondary/10 text-secondary" },
     { label: "Clinic Locations", value: stats.totalLocations, icon: MapPin, color: "bg-warning/10 text-warning" },
+    {
+      label: "Team (published / total)",
+      value: `${stats.teamMembersPublished} / ${stats.teamMembers}`,
+      icon: Users,
+      color: "bg-primary/10 text-primary",
+    },
   ];
 
   return (
@@ -169,7 +193,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
             {statCards.map((stat) => (
               <div key={stat.label} className="bg-card border border-border rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
@@ -235,7 +259,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Quick Actions */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4 mt-8">
             <Link 
               to="/admin/posts/new" 
               className="bg-card border border-border rounded-lg p-4 hover:border-primary transition-colors group"
@@ -259,6 +283,14 @@ export default function AdminDashboard() {
               <Settings className="h-6 w-6 text-primary mb-2" />
               <h3 className="font-medium text-foreground group-hover:text-primary">Site Settings</h3>
               <p className="text-sm text-muted-foreground">SEO, contact info, metadata</p>
+            </Link>
+            <Link
+              to="/admin/team"
+              className="bg-card border border-border rounded-lg p-4 hover:border-primary transition-colors group"
+            >
+              <Users className="h-6 w-6 text-primary mb-2" />
+              <h3 className="font-medium text-foreground group-hover:text-primary">Clinical team</h3>
+              <p className="text-sm text-muted-foreground">Doctors and staff on the /team page</p>
             </Link>
           </div>
         </div>

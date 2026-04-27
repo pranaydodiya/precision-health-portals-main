@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+
 export function Footer() {
   return <footer className="bg-primary text-primary-foreground">
       <div className="container py-12 md:py-16">
@@ -33,6 +35,11 @@ export function Footer() {
                 <a href="#testimonials" className="hover:underline text-primary-foreground/80">
                   Patient Reviews
                 </a>
+              </li>
+              <li>
+                <Link to="/team" className="hover:underline text-primary-foreground/80">
+                  Clinical team
+                </Link>
               </li>
               <li>
                 <a href="#appointment" className="hover:underline text-primary-foreground/80">

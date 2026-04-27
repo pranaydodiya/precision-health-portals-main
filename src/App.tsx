@@ -25,6 +25,9 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import AdminServices from "./pages/admin/AdminServices";
 import AdminComments from "./pages/admin/AdminComments";
 import AdminAppointments from "./pages/admin/AdminAppointments";
+import AdminTeam from "./pages/admin/AdminTeam";
+import Team from "./pages/Team";
+import TeamMemberProfile from "./pages/TeamMemberProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,6 +56,8 @@ const App = () => (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/team/:slug" element={<TeamMemberProfile />} />
                 {/* Hidden Admin Routes */}
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin" element={<AdminDashboard />} />
@@ -66,6 +71,7 @@ const App = () => (
                 <Route path="/admin/appointments" element={<AdminAppointments />} />
                 <Route path="/admin/analytics" element={<AdminAnalytics />} />
                 <Route path="/admin/settings" element={<AdminSettings />} />
+                <Route path="/admin/team" element={<AdminTeam />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
